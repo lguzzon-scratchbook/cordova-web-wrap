@@ -12,6 +12,7 @@
   "author": "Luca Guzzon",
   "dependencies": {
     "cordova-android": "^8.1.0",
+    "cordova-ios": "^5.1.1",
     "cordova-plugin-app-launcher": "^0.4.0",
     "cordova-plugin-inappbrowser": "^4.0.0",
     "cordova-plugin-network-information": "^2.0.2",
@@ -29,7 +30,8 @@
       }
     },
     "platforms": [
-      "android"
+      "android",
+      "ios"
     ]
   }
 }
