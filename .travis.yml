@@ -8,3 +8,47 @@
 # https://raw.githubusercontent.com/youstinus/volunteer/master/.travis.yml
 
 # https://docs.travis-ci.com/user/languages/android/
+
+language: node_js
+node_js:
+    - "12.18.1"
+sudo: false
+
+
+matrix:
+  include:
+  -
+    language: android
+    os: linux
+    jdk: oraclejdk8
+    sudo: required
+    android:
+      components:
+      - tools
+      - platform-tools
+      - build-tools-29.0.3
+      - android-27
+      - android-28
+      - android-29
+      - extra-google-google_play_services
+      - extra-google-m2repository
+      - extra-android-m2repository
+    licenses:
+    - android-sdk-preview-license-.+
+    - android-sdk-license-.+
+    - android-googletv-license-.+
+    - google-gdk-license-.+
+    - intel-android-extra-license-.+
+    - mips-android-sysimage-license-.+
+    before_install:
+    - export LANG=en_US.UTF-8
+    - node --version
+    - npm --version
+    - npm i -g --unsafe-perm=true --allow-root "cordova@latest" "phonegap@latest" "@ionic/cli@latest" "framework7-cli@latest" "cordova-check-plugins"
+    - cordova --version
+    - cordova telemetry off
+    - phonegap --version
+    - phonegap analytics off
+    - ionic --version
+    - framework7 --version
+    - cordova-check-plugins --version
