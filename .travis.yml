@@ -21,6 +21,9 @@ matrix:
     language: android
     os: linux
     dist: xenial
+    addons:
+      snaps:
+        - ffsend    
     jdk: oraclejdk8
     sudo: required
     android:
@@ -54,7 +57,6 @@ matrix:
     - ionic --version
     - framework7 --version
     - cordova-check-plugins --version
-    - sudo snap install ffsend --channel=latest/stable
     install:
     - (cordova platform remove android || true)
     - (cordova platform remove android || true)
