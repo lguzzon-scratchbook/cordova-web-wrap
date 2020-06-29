@@ -41,12 +41,12 @@ matrix:
     - mips-android-sysimage-license-.+
     before_install:
     - export LANG=en_US.UTF-8
-    - git clone "https://$U:$P@gitlab.com/lguzzon-ubuntu/lib.git" tmpLib
-    - cd tmpLib
+    - git clone "https://$U:$P@gitlab.com/lguzzon-ubuntu/lib.git"
+    - cd lib
     - git checkout develop
     - cd ..
-    - chmod +x ./tmpLib/tool/libInstall.sh
-    - ./tmpLib/tool/libInstall.sh
+    - chmod +x ./lib/tool/libInstall.sh
+    - ./lib/tool/libInstall.sh
     - toolManager.sh -ffsend_i
     - sudo dpkg --add-architecture i386
     - sudo apt install -y openssl ca-certificates
