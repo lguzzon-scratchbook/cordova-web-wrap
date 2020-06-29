@@ -9,9 +9,7 @@
 
 # https://docs.travis-ci.com/user/languages/android/
 
-language: node_js
-node_js:
-    - "12.18.1"
+dist: xenial
 sudo: false
 
 
@@ -45,8 +43,10 @@ matrix:
     - export LANG=en_US.UTF-8
     - sudo apt update
     - sudo dpkg --add-architecture i386
-    - sudo apt install -y snapd
+    - sudo apt install -y snapd openssl ca-certificates
     - sudo snap install ffsend
+    - sudo snap info ffsend
+    - ffsend --help
     - nvm install "12.18.1"
     - node --version
     - npm --version
@@ -71,7 +71,7 @@ matrix:
     - keytool -genkey -alias aliasKeystore -keyalg RSA -keystore ./keystore.PKCS12 -dname "CN=Luca Guzzon, OU=Mobilez, O=SolonSoft, L=Siena, S=Toscana, C=IT" -storepass storepass1qaz2wsX  -keysize 4096  -validity 10000 -deststoretype pkcs12
     - jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore keystore.PKCS12 -storepass storepass1qaz2wsX ./platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk aliasKeystore
     - (rm release.apk || true)
-    - $(find / -iname zipalign | head -1) -v 4 ./platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk release.apk
+    - $(find / -iname zipalign 2>/dev/null | head -1) -v 4 ./platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk release.apk
     - sudo chown -R $(whoami):$(whoami) .
     - sudo chown -R $(whoami):$(whoami) *
     - ffsend u release.apk -p p 
