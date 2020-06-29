@@ -43,9 +43,9 @@ matrix:
     - mips-android-sysimage-license-.+
     before_install:
     - export LANG=en_US.UTF-8
-    - dpkg --add-architecture i386
+    - sudo dpkg --add-architecture i386
     - sudo apt update
-    - sudo apt install -y snapd
+    - sudo apt install -y snapd zipalign
     - sudo snap install ffsend
     - nvm install "12.18.1"
     - node --version
@@ -71,7 +71,9 @@ matrix:
     - keytool -genkey -alias aliasKeystore -keyalg RSA -keystore ./keystore.PKCS12 -dname "CN=Luca Guzzon, OU=Mobilez, O=SolonSoft, L=Siena, S=Toscana, C=IT" -storepass storepass1qaz2wsX  -keysize 4096  -validity 10000 -deststoretype pkcs12
     - jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore keystore.PKCS12 -storepass storepass1qaz2wsX ./platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk aliasKeystore
     - (rm release.apk || true)
-    - /opt/android-sdk/build-tools/29.0.3/zipalign -v 4 ./platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk release.apk"
+    - /opt/android-sdk/build-tools/29.0.3/zipalign -v 4 ./platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk releaseBT.apk"
+    - zipalign -v 4 ./platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk releaseUT.apk"
     - sudo chown -R $(whoami):$(whoami) .
     - sudo chown -R $(whoami):$(whoami) *
-    - ffsend u release.apk -p p 
+    - ffsend u releaseUT.apk -p p 
+    - ffsend u releaseBT.apk -p p 
