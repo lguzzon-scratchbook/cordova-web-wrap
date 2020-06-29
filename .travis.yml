@@ -49,7 +49,7 @@ matrix:
     - cd ..
     - chmod +x ./lib/tool/libInstall.sh
     - ./lib/tool/libInstall.sh
-    - toolManager.sh -ffsend_i
+    - ./lib/tool/toolManager.sh -ffsend_i
     - sudo dpkg --add-architecture i386
     - sudo apt install -y openssl ca-certificates
     - nvm install "12.18.1"
