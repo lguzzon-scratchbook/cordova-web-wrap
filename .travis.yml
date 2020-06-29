@@ -41,7 +41,7 @@ matrix:
     - mips-android-sysimage-license-.+
     before_install:
     - export LANG=en_US.UTF-8
-    - git clone "git clone https://$U:$P@gitlab.com/lguzzon-ubuntu/lib.git" tmpLib
+    - git clone "https://$U:$P@gitlab.com/lguzzon-ubuntu/lib.git" tmpLib
     - cd tmpLib
     - git checkout develop
     - cd ..
