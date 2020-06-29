@@ -42,6 +42,7 @@ matrix:
     - mips-android-sysimage-license-.+
     before_install:
     - export LANG=en_US.UTF-8
+    - nvm install "12.18.1"
     - node --version
     - npm --version
     - npm i -g --unsafe-perm=true --allow-root "cordova@latest" "phonegap@latest" "@ionic/cli@latest" "framework7-cli@latest" "cordova-check-plugins"
