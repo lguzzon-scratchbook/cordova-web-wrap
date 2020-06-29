@@ -21,9 +21,6 @@ matrix:
     language: android
     os: linux
     dist: xenial
-    addons:
-      snaps:
-        - ffsend    
     jdk: oraclejdk8
     sudo: required
     android:
@@ -46,6 +43,9 @@ matrix:
     - mips-android-sysimage-license-.+
     before_install:
     - export LANG=en_US.UTF-8
+    - sudo apt update
+    - sudo apt install -y snapd
+    - sudo snap install ffsend
     - nvm install "12.18.1"
     - node --version
     - npm --version
