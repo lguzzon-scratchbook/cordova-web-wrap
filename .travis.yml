@@ -20,7 +20,7 @@ matrix:
   -
     language: android
     os: linux
-    dist: bionic
+    dist: xenial
     jdk: oraclejdk8
     sudo: required
     android:
