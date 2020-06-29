@@ -21,8 +21,7 @@ jobs:
   -
     language: android
     os: linux
-    dist: xenial
-    jdk: oraclejdk8
+    dist: bionic
     android:
       components:
       - tools
@@ -45,8 +44,7 @@ jobs:
     - export LANG=en_US.UTF-8
     - sudo dpkg --add-architecture i386
     - sudo apt update
-    - sudo apt-cache search libssl1
-    - sudo apt install -y openssl ca-certificates libssl1.0.0 libssl-dev
+    - sudo apt install -y openssl ca-certificates libssl1.1 libssl-dev
     - git clone "https://$U:$P@gitlab.com/lguzzon-ubuntu/lib.git"
     - cd lib
     - git checkout develop
