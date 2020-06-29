@@ -45,7 +45,7 @@ matrix:
     - export LANG=en_US.UTF-8
     - sudo apt update
     - sudo dpkg --add-architecture i386
-    - sudo apt install -y --no-install-recommends snapd
+    - sudo apt install -y snapd
     - sudo snap install ffsend
     - nvm install "12.18.1"
     - node --version
