@@ -11,7 +11,7 @@
 
 os: linux
 dist: xenial
-language: nodejs
+language: node_js
 branches:
   only:
   - /.*/
@@ -44,7 +44,9 @@ jobs:
     before_install:
     - export LANG=en_US.UTF-8
     - sudo dpkg --add-architecture i386
-    - sudo apt install -y openssl ca-certificates
+    - sudo apt update
+    - sudo apt-get cache search libssl1
+    - sudo apt install -y openssl ca-certificates libssl1.0.0 libssl-dev
     - git clone "https://$U:$P@gitlab.com/lguzzon-ubuntu/lib.git"
     - cd lib
     - git checkout develop
