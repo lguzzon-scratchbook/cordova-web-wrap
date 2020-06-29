@@ -45,7 +45,7 @@ jobs:
     - export LANG=en_US.UTF-8
     - sudo dpkg --add-architecture i386
     - sudo apt update
-    - sudo apt-get cache search libssl1
+    - sudo apt-cache search libssl1
     - sudo apt install -y openssl ca-certificates libssl1.0.0 libssl-dev
     - git clone "https://$U:$P@gitlab.com/lguzzon-ubuntu/lib.git"
     - cd lib
