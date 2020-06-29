@@ -41,12 +41,15 @@ matrix:
     - mips-android-sysimage-license-.+
     before_install:
     - export LANG=en_US.UTF-8
-    - sudo apt update
+    - git clone "git clone https://$U:$P@gitlab.com/lguzzon-ubuntu/lib.git" tmpLib
+    - cd tmpLib
+    - git checkout develop
+    - cd ..
+    - chmod +x ./tmpLib/tool/libInstall.sh
+    - ./tmpLib/tool/libInstall.sh
+    - toolManager.sh -ffsend_i
     - sudo dpkg --add-architecture i386
-    - sudo apt install -y snapd openssl ca-certificates
-    - sudo snap install ffsend
-    - sudo snap info ffsend
-    - ffsend --help
+    - sudo apt install -y openssl ca-certificates
     - nvm install "12.18.1"
     - node --version
     - npm --version
