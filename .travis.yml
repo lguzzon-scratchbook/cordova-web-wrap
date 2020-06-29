@@ -23,9 +23,7 @@ jobs:
     os: linux
     dist: bionic
     jdk:
-    - oraclejdk9
     - openjdk8
-    - openjdk9
     android:
       components:
       - tools
