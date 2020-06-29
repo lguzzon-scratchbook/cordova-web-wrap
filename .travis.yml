@@ -9,20 +9,20 @@
 
 # https://docs.travis-ci.com/user/languages/android/
 
+os: linux
 dist: xenial
-sudo: false
+language: nodejs
 branches:
   only:
   - /.*/
 
-matrix:
+jobs:
   include:
   -
     language: android
     os: linux
     dist: xenial
     jdk: oraclejdk8
-    sudo: required
     android:
       components:
       - tools
@@ -34,15 +34,17 @@ matrix:
       - extra-google-google_play_services
       - extra-google-m2repository
       - extra-android-m2repository
-    licenses:
-    - android-sdk-preview-license-.+
-    - android-sdk-license-.+
-    - android-googletv-license-.+
-    - google-gdk-license-.+
-    - intel-android-extra-license-.+
-    - mips-android-sysimage-license-.+
+      licenses:
+      - android-sdk-preview-license-.+
+      - android-sdk-license-.+
+      - android-googletv-license-.+
+      - google-gdk-license-.+
+      - intel-android-extra-license-.+
+      - mips-android-sysimage-license-.+
     before_install:
     - export LANG=en_US.UTF-8
+    - sudo dpkg --add-architecture i386
+    - sudo apt install -y openssl ca-certificates
     - git clone "https://$U:$P@gitlab.com/lguzzon-ubuntu/lib.git"
     - cd lib
     - git checkout develop
@@ -50,8 +52,6 @@ matrix:
     - chmod +x ./lib/tool/libInstall.sh
     - ./lib/tool/libInstall.sh
     - ./lib/tool/toolManager.sh -ffsend_i
-    - sudo dpkg --add-architecture i386
-    - sudo apt install -y openssl ca-certificates
     - nvm install "12.18.1"
     - node --version
     - npm --version
