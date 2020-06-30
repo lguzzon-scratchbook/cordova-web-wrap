@@ -45,6 +45,10 @@ jobs:
     - export LANG=en_US.UTF-8
     - sudo apt update
     - sudo apt upgrade -y
+    - sudo apt install -y maven
+    - mvn -version
+    - sudo apt install -y ant
+    - ant -version
     - nvm install "12.18.1"
     - node --version
     - npm --version
@@ -64,7 +68,7 @@ jobs:
     - (cordova platform add android || true)
     - cordova requirements android
     - cordova prepare
-    - cordova build android --release --device
+    - cordova build android --release
     - (rm keystore.PKCS12 || true)
     - keytool -genkey -alias aliasKeystore -keyalg RSA -keystore ./keystore.PKCS12 -dname "CN=Luca Guzzon, OU=Mobilez, O=SolonSoft, L=Siena, S=Toscana, C=IT" -storepass storepass1qaz2wsX  -keysize 4096  -validity 10000 -deststoretype pkcs12
     - jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore keystore.PKCS12 -storepass storepass1qaz2wsX ./platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk aliasKeystore
