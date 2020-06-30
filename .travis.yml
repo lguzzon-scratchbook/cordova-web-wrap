@@ -44,11 +44,20 @@ jobs:
     before_install:
     - export LANG=en_US.UTF-8
     - sudo apt update
-    - sudo apt upgrade -y
-    - sudo apt install -y maven
-    - mvn -version
-    - sudo apt install -y ant
+    #- sudo apt upgrade -y
+    # SDKMAN
+    - sudo apt install -y curl wget unzip zip ca-certificates 
+    - curl -s "https://get.sdkman.io" | bash
+    - source "$HOME/.sdkman/bin/sdkman-init.sh"
+    - echo sdkman_auto_answer=true > "$HOME/.sdkman/etc/config"
+    - source "$HOME/.sdkman/bin/sdkman-init.sh"
+    - sdk version
+	# ANT
+    - sdk install ant
     - ant -version
+	# MAVEN
+    - sdk install maven
+    - mvn -version
     - nvm install "12.18.1"
     - node --version
     - npm --version
@@ -85,7 +94,7 @@ jobs:
     - git tag $TRAVIS_TAG
     deploy:
       provider: releases
-      user: "$U"
+      username: "$U"
       password: "$P"
       file: "${TRAVIS_TAG}-release.apk"
-      skip_cleanup: true
+      cleanup: false
