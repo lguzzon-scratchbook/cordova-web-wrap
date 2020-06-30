@@ -52,10 +52,10 @@ jobs:
     - echo sdkman_auto_answer=true > "$HOME/.sdkman/etc/config"
     - source "$HOME/.sdkman/bin/sdkman-init.sh"
     - sdk version
-	# ANT
+    # ANT
     - sdk install ant
     - ant -version
-	# MAVEN
+    # MAVEN
     - sdk install maven
     - mvn -version
     - nvm install "12.18.1"
