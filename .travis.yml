@@ -21,9 +21,8 @@ jobs:
   -
     language: android
     os: linux
-    dist: bionic
-    jdk:
-    - openjdk8
+    dist: xenial
+    jdk: oraclejdk8
     android:
       components:
       - tools
@@ -44,36 +43,28 @@ jobs:
       - mips-android-sysimage-license-.+
     before_install:
     - export LANG=en_US.UTF-8
-    - sudo dpkg --add-architecture i386
     - sudo apt update
-    - sudo apt install -y openssl ca-certificates libssl1.1 libssl-dev
-    - git clone "https://$U:$P@gitlab.com/lguzzon-ubuntu/lib.git"
-    - cd lib
-    - git checkout develop
-    - cd ..
-    - chmod +x ./lib/tool/libInstall.sh
-    - ./lib/tool/libInstall.sh
-    - ./lib/tool/toolManager.sh -ffsend_i
+    - sudo apt upgrade -y
     - nvm install "12.18.1"
     - node --version
     - npm --version
-    - npm i -g --unsafe-perm=true --allow-root "cordova@latest" "phonegap@latest" "@ionic/cli@latest" "framework7-cli@latest" "cordova-check-plugins"
+    - npm i -g --unsafe-perm=true --allow-root "cordova@latest"
     - cordova --version
     - cordova telemetry off
+    - npm i -g --unsafe-perm=true --allow-root "phonegap@latest"
     - phonegap --version
     - phonegap analytics off
+    - npm i -g --unsafe-perm=true --allow-root "@ionic/cli@latest"
     - ionic --version
+    - npm i -g --unsafe-perm=true --allow-root "framework7-cli@latest"
     - framework7 --version
+    - npm i -g --unsafe-perm=true --allow-root "cordova-check-plugins@latest"
     - cordova-check-plugins --version
     install:
-    - (cordova platform remove android || true)
-    - (cordova platform remove android || true)
     - (cordova platform add android || true)
     - cordova requirements android
-    - cordova-check-plugins --update=auto
-    - cordova plugin save
     - cordova prepare
-    - cordova build android --release
+    - cordova build android --release --device
     - (rm keystore.PKCS12 || true)
     - keytool -genkey -alias aliasKeystore -keyalg RSA -keystore ./keystore.PKCS12 -dname "CN=Luca Guzzon, OU=Mobilez, O=SolonSoft, L=Siena, S=Toscana, C=IT" -storepass storepass1qaz2wsX  -keysize 4096  -validity 10000 -deststoretype pkcs12
     - jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore keystore.PKCS12 -storepass storepass1qaz2wsX ./platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk aliasKeystore
@@ -81,4 +72,16 @@ jobs:
     - $(find / -iname zipalign 2>/dev/null | head -1) -v 4 ./platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk release.apk
     - sudo chown -R $(whoami):$(whoami) .
     - sudo chown -R $(whoami):$(whoami) *
-    - ffsend u release.apk -p p 
+    before_deploy:
+    # Set up git user name and tag this commit
+    - git config --local user.name "Luca Guzzon"
+    - git config --local user.email "luca.guzzon@gmail.com"
+    - export TRAVIS_TAG=${TRAVIS_TAG:-$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)}
+    - mv release.apk "${TRAVIS_TAG}-release.apk"
+    - git tag $TRAVIS_TAG
+    deploy:
+      provider: releases
+      user: "$U"
+      password: "$P"
+      file: "${TRAVIS_TAG}-release.apk"
+      skip_cleanup: true
